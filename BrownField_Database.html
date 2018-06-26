@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>My Search in 3D</title>
+
+		<link rel="stylesheet" href="https://js.arcgis.com/4.0beta3/esri/css/main.css">
+		<script src="https://js.arcgis.com/4.0beta3/"></script>
+
+		<script>
+			 require([
+			 "esri/Map",
+			 "esri/views/SceneView",
+			 "esri/widgets/Search",
+			 "esri/widgets/Search/SearchViewModel",
+			 "esri/widgets/BasemapToggle",
+			 "esri/widgets/BasemapToggle/BasemapToggleViewModel",
+			 "dojo/domReady!"
+			 ], function(
+			 Map,
+			 SceneView,
+			 Search,
+			 SearchVM,
+			 BasemapToggle,
+			 BasemapToggleVM) {
+				  var map = new Map({
+				  basemap: "topo"
+			  });
+				 var view = new SceneView({
+				 scale: 150000000,
+				 container: "map1",
+				 map: map
+				 });
+
+				var searchWgt = new Search({
+					viewModel: new SearchVM({
+						view: view
+					})
+				}, "searchDiv");
+
+				 var toggleWgt = new BasemapToggle({
+				 viewModel: new BasemapToggleVM({
+				 view: view,
+				 secondaryBasemap: "satellite",
+				 })
+				 }, "toggleDiv");
+
+				 toggleWgt.startup();
+				 searchWgt.startup();
+			});
+		</script>
+
+		<style>
+			html,
+			body {
+				padding: 10;
+				margin: 0;
+			}
+			#searchDiv {
+				position: absolute;
+				top: 20px;
+				right: 20px;
+				z-index: 10;
+			}
+			#toggleDiv {
+			 position: absolute;
+			 top: 80px;
+			 right: 20px;
+			 z-index: 10;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="map1"></div>
+		<div id="searchDiv"></div>
+		<div id="toggleDiv"></div>
+	</body>
+</html>
